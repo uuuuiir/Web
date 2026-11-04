@@ -15,6 +15,18 @@ type AdminData = {
 
 const initialData: AdminData = { live: 0, finalized: false, percentage: 0, parties: {} }
 
+type ApiError = { error?: string; captcha?: string }
+
+async function readJson<T>(response: Response): Promise<T | null> {
+  const text = await response.text()
+  if (!text.trim()) return null
+  try {
+    return JSON.parse(text) as T
+  } catch {
+    return null
+  }
+}
+
 export default function AdminPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -29,7 +41,8 @@ export default function AdminPage() {
   async function loadData(secret = password) {
     const response = await fetch('/api/admin/election', { headers: { 'x-admin-password': secret }, cache: 'no-store' })
     if (!response.ok) throw new Error('Contraseña incorrecta')
-    const nextData = (await response.json()) as AdminData
+    const nextData = await readJson<AdminData>(response)
+    if (!nextData) throw new Error('La respuesta del servidor está vacía')
     setData(nextData)
     setDraft(nextData)
     setUnlocked(true)
@@ -53,7 +66,7 @@ export default function AdminPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, captchaAnswer: captchaAnswer ? Number(captchaAnswer) : undefined }),
       })
-      const result = await response.json()
+      const result = (await readJson<ApiError>(response)) ?? {}
       if (!response.ok) {
         if (result.captcha) {
           setCaptchaPrompt(result.captcha)
@@ -84,7 +97,8 @@ export default function AdminPage() {
         body: JSON.stringify(saveDraft),
       })
       if (!response.ok) throw new Error('No se pudieron guardar los datos')
-      const nextData = (await response.json()) as AdminData
+      const nextData = await readJson<AdminData>(response)
+      if (!nextData) throw new Error('La respuesta del servidor está vacía')
       setData(nextData)
       setDraft(nextData)
       setMessage('Datos guardados correctamente')

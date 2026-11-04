@@ -39,7 +39,6 @@ const presets: Preset[] = [
     label: 'PSOE + izquierdas + PNV',
     si: ['psoe', 'frente-amplio', 'podemos', 'erc', 'eh-bildu', 'bng', 'pnv'],
   },
-  { id: 'gran-coalicion', label: 'PP + PSOE', si: ['pp', 'psoe'] },
 ]
 
 function votesFromPreset(preset: Preset): Record<string, Vote> {

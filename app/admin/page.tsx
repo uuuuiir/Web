@@ -15,7 +15,7 @@ type AdminData = {
 
 const initialData: AdminData = { live: 0, finalized: false, percentage: 0, parties: {} }
 
-type ApiError = { error?: string; captcha?: string }
+type ApiError = { error?: string; detail?: string; captcha?: string }
 
 async function readJson<T>(response: Response): Promise<T | null> {
   const text = await response.text()
@@ -72,7 +72,7 @@ export default function AdminPage() {
           setCaptchaPrompt(result.captcha)
           setCaptchaAnswer('')
         }
-        throw new Error(result.error ?? 'No se pudo iniciar sesión')
+        throw new Error([result.error, result.detail].filter(Boolean).join(' · ') || 'No se pudo iniciar sesión')
       }
       await loadData()
     } catch (error) {

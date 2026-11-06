@@ -28,7 +28,12 @@ async function supabase(path: string, init?: RequestInit) {
 }
 
 function challengeResponse(attempts: number, a: number, b: number) {
-  return NextResponse.json({ error: 'Se requiere captcha', attempts, captcha: `${a} + ${b} = ?` }, { status: 429 })
+  return NextResponse.json({
+    error: 'Se requiere captcha',
+    detail: `Bloqueo temporal de esta IP tras ${attempts} intentos fallidos. Resuelve la operación para continuar.`,
+    attempts,
+    captcha: `${a} + ${b} = ?`,
+  }, { status: 429 })
 }
 
 export async function POST(request: Request) {

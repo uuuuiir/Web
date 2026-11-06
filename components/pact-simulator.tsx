@@ -19,6 +19,7 @@ type Preset = { id: string; label: string; si: string[]; abs?: string[] }
 
 const presets: Preset[] = [
   { id: 'pp-vox', label: 'PP + VOX', si: ['pp', 'vox'] },
+  { id: 'pp-vox-salf', label: 'PP + VOX + SALF', si: ['pp', 'vox', 'salf'] },
   {
     id: 'pp-vox-derecha',
     label: 'Todas las derechas',

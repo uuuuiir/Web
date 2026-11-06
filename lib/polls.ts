@@ -125,4 +125,14 @@ export const polls: Poll[] = [
     seats: { pp: 126, psoe: 107, vox: 62, 'frente-amplio': 18, podemos: 5, salf: 1 },
     pct: { pp: 31.5, psoe: 28.0, vox: 16.8, 'frente-amplio': 6.6, podemos: 3.0, salf: 2.0 },
   },
+    {
+    id: 'dym',
+    scope: 'statewide',
+    name: 'DYM',
+    kind: 'Encuesta privada · solo estatales',
+    fieldwork: '22–26 oct 2026',
+    sample: '1.200 entrevistas',
+    seats: { pp: 126, psoe: 107, vox: 62, 'frente-amplio': 18, podemos: 5, salf: 1 },
+    pct: { pp: 31.5, psoe: 28.0, vox: 16.8, 'frente-amplio': 6.6, podemos: 3.0, salf: 2.0 },
+  },
 ]

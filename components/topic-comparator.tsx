@@ -39,7 +39,10 @@ export function TopicComparator() {
 
   return (
     <div className="flex flex-col gap-8">
-      <section aria-labelledby="tema">
+      <section
+        aria-labelledby="tema"
+        className="sticky top-16 z-30 -mx-4 bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:-mx-6 sm:px-6"
+      >
         <h2 id="tema" className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           1. Elige un tema
         </h2>

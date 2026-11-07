@@ -248,8 +248,7 @@ export function PollExplorer() {
                   ))}
                 </div>
                 {!customValid && <p role="alert" className="mt-3 text-sm font-medium text-destructive">El total no puede superar los 350 escaños.</p>}
-                {customComplete && (
-                  <form onSubmit={submitPorra} className="mt-5 rounded-2xl border border-primary/40 bg-primary/5 p-4">
+                <form onSubmit={submitPorra} className="mt-5 rounded-2xl border border-primary/40 bg-primary/5 p-4">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
                       <label className="flex-1 text-sm font-semibold" htmlFor="porra-name">
                         Tu nombre
@@ -262,8 +261,8 @@ export function PollExplorer() {
                     <p className="mt-2 text-xs text-muted-foreground">La porra se guardará para comparar los aciertos después de las elecciones.</p>
                     {porraStatus === 'saved' && <p role="status" className="mt-2 text-sm font-semibold text-green-600">Porra guardada correctamente.</p>}
                     {porraStatus === 'error' && <p role="alert" className="mt-2 text-sm font-semibold text-destructive">No se pudo guardar. Inténtalo de nuevo.</p>}
+                    {!customComplete && <p className="mt-2 text-xs font-medium text-muted-foreground">Completa los 350 escaños para activar el envío.</p>}
                   </form>
-                )}
               </div>
             )}
           </div>

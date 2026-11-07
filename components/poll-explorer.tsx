@@ -34,6 +34,9 @@ export function PollExplorer() {
     Object.fromEntries(partiesBySpectrum.map((party) => [party.slug, 0])),
   )
   const [highlighted, setHighlighted] = useState<string | null>(null)
+  const [porraName, setPorraName] = useState('')
+  const [customMode, setCustomMode] = useState<'personalizado' | 'porra'>('personalizado')
+  const [porraStatus, setPorraStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const previousPercentage = useRef<number | null>(null)
 
   useEffect(() => {
@@ -71,6 +74,23 @@ export function PollExplorer() {
 
   const customTotal = Object.values(customSeats).reduce((total, seats) => total + seats, 0)
   const customValid = customTotal <= 350
+  const customComplete = customTotal === 350
+  const submitPorra = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!customComplete || !porraName.trim()) return
+    setPorraStatus('saving')
+    try {
+      const response = await fetch('/api/porras', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: porraName.trim(), seats: customSeats }),
+      })
+      if (!response.ok) throw new Error('No se pudo guardar')
+      setPorraStatus('saved')
+    } catch {
+      setPorraStatus('error')
+    }
+  }
   const customPoll = useMemo(() => ({
     id: 'custom',
     scope: 'all' as const,
@@ -83,7 +103,7 @@ export function PollExplorer() {
   }), [customSeats, customTotal])
   const pollId = selectedId ?? (isLive ? 'live' : polls[0].id)
   const poll = (isLive && pollId === 'live' ? livePoll : pollId === 'custom' ? customPoll : polls.find((p) => p.id === pollId)) ?? polls[0]
-  const showingLive = poll.live === true
+  const showingLive = 'live' in poll && poll.live === true
   const assignedSeats = Object.values(poll.seats).reduce((total, seats) => total + seats, 0)
 
   if (checkingLive) {
@@ -180,15 +200,28 @@ export function PollExplorer() {
             <button
               type="button"
               role="radio"
-              aria-checked={pollId === 'custom'}
-              onClick={() => setSelectedId('custom')}
+              aria-checked={pollId === 'custom' && customMode === 'personalizado'}
+              onClick={() => { setSelectedId('custom'); setCustomMode('personalizado') }}
               className={cn(
                 'w-full rounded-xl border px-4 py-3 text-left transition-colors',
-                pollId === 'custom' ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card hover:border-foreground/30',
+                pollId === 'custom' && customMode === 'personalizado' ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card hover:border-foreground/30',
               )}
             >
               <span className="block font-display text-lg font-bold leading-tight">Personalizado</span>
               <span className={cn('block text-xs', pollId === 'custom' ? 'opacity-75' : 'text-muted-foreground')}>Introduce los escaños de cada partido</span>
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={pollId === 'custom' && customMode === 'porra'}
+              onClick={() => { setSelectedId('custom'); setCustomMode('porra') }}
+              className={cn(
+                'mt-2 w-full rounded-xl border px-4 py-3 text-left transition-colors',
+                pollId === 'custom' && customMode === 'porra' ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card hover:border-foreground/30',
+              )}
+            >
+              <span className="block font-display text-lg font-bold leading-tight">Porra</span>
+              <span className={cn('block text-xs', pollId === 'custom' ? 'opacity-75' : 'text-muted-foreground')}>Completa los 350 escaños y participa en el ranking</span>
             </button>
             {pollId === 'custom' && (
               <div className="mt-3 rounded-2xl border border-border bg-card p-4">
@@ -215,6 +248,22 @@ export function PollExplorer() {
                   ))}
                 </div>
                 {!customValid && <p role="alert" className="mt-3 text-sm font-medium text-destructive">El total no puede superar los 350 escaños.</p>}
+                {customComplete && (
+                  <form onSubmit={submitPorra} className="mt-5 rounded-2xl border border-primary/40 bg-primary/5 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+                      <label className="flex-1 text-sm font-semibold" htmlFor="porra-name">
+                        Tu nombre
+                        <input id="porra-name" name="name" maxLength={80} required value={porraName} onChange={(event) => { setPorraName(event.target.value); setPorraStatus('idle') }} placeholder="Ej. Ana García" className="mt-2 w-full rounded-xl border border-input bg-background px-3 py-2 font-normal" />
+                      </label>
+                      <button type="submit" disabled={porraStatus === 'saving' || !porraName.trim()} className="rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-opacity disabled:cursor-not-allowed disabled:opacity-50">
+                        {porraStatus === 'saving' ? 'Guardando…' : 'Enviar porra'}
+                      </button>
+                    </div>
+                    <p className="mt-2 text-xs text-muted-foreground">La porra se guardará para comparar los aciertos después de las elecciones.</p>
+                    {porraStatus === 'saved' && <p role="status" className="mt-2 text-sm font-semibold text-green-600">Porra guardada correctamente.</p>}
+                    {porraStatus === 'error' && <p role="alert" className="mt-2 text-sm font-semibold text-destructive">No se pudo guardar. Inténtalo de nuevo.</p>}
+                  </form>
+                )}
               </div>
             )}
           </div>

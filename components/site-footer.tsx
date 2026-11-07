@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function SiteFooter() {
   return (
     <footer className="mt-20 border-t border-border">
@@ -11,6 +13,14 @@ export function SiteFooter() {
         <p className="mt-3 max-w-3xl text-pretty">
           Fotografías de líderes: Wikimedia Commons, bajo sus respectivas licencias libres.
         </p>
+        <Link
+          href="/admin"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-block text-xs text-muted-foreground/60 transition-colors hover:text-foreground"
+        >
+          Administración
+        </Link>
       </div>
     </footer>
   )

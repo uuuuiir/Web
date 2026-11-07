@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LockKeyhole } from 'lucide-react'
 import { Countdown } from '@/components/countdown'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { useLive } from '@/lib/live'
@@ -69,16 +68,6 @@ export function SiteHeader() {
         <div className="flex items-center gap-4">
           <Countdown className="hidden md:flex" />
           <ThemeToggle />
-          <Link
-            href="/admin"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Abrir administración"
-            title="Administración"
-            className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-foreground/30 hover:bg-secondary hover:text-foreground"
-          >
-            <LockKeyhole aria-hidden className="size-4" />
-          </Link>
         </div>
       </div>
     </header>

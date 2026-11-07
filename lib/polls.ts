@@ -23,7 +23,7 @@ export const polls: Poll[] = [
     fieldwork: 'Noviembre 2026',
     sample: 'Agregado',
     seats: {
-      pp: 134, psoe: 106, vox: 68, 'frente-amplio': 10, podemos: 1, erc: 9, junts: 6,
+      pp: 134, psoe: 106, vox: 68, 'frente-amplio': 10, podemos: 1, erc: 9, junts: 7,
       'eh-bildu': 7, pnv: 4, bng: 2, cc: 1, upn: 1, salf: 0,
     },
     pct: {

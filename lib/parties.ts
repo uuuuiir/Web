@@ -315,7 +315,21 @@ export const isStatewide = (party: Party) => party.scope === 'Estatal'
 export const statewideBySeats2023 = partiesBySeats2023.filter(isStatewide)
 export const regionalBySeats2023 = partiesBySeats2023.filter((p) => !isStatewide(p))
 
-export const leaderPhoto = (party: Party) => `/leaders/${party.slug}.jpg`
+const leaderPhotoOverrides: Record<string, string> = {
+  podemos:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Irene_Montero_Gil-BaYtiWVDRGBYj2aNHICmhETI2TO0qC.jpg',
+  'eh-bildu':
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BC_OSKAR_MATUTE-lXkvnfluV00DuEuvVzlusvQ4iKMaAt.jpg',
+  bng: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/N%C3%A9stor_Rego%2C_XV_Asemblea_Nacional_BNG_2016_03-lpBmKMGNY7eA4U7f90VElwnaZlMZGz.jpg',
+  erc: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gabriel_Rufi%C3%A1n_2019-FqcuBaFTKB5cFNshj7xRTdkdBRGkkS.png',
+  pnv: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Maribel_Vaquero_2019_%28cropped%29-eiuQJv9dhSzMhDJafCNmTQX2XY0dQs.jpg',
+  junts:
+    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Candidats_Eleccions_Generals_2015_-_M%C3%ADriam_Nogueras-RJPpysovHUayWt1nJzgCVrm9tZqwOC.jpg',
+  cc: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cristina_Valido_2023_%28cropped%29-bIjiVcLdsIYywWaXUck35aGsn4xxc6.jpg',
+  upn: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LETICIA-SAN-MARTIN_out-JuPGkStK0G8ZOv3ZSYladac51XW3Le.jpg',
+}
+
+export const leaderPhoto = (party: Party) => leaderPhotoOverrides[party.slug] ?? `/leaders/${party.slug}.jpg`
 
 export function getParty(slug: string) {
   return parties.find((p) => p.slug === slug)

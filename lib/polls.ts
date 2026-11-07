@@ -20,15 +20,15 @@ export const polls: Poll[] = [
     scope: 'all',
     name: 'Promedio',
     kind: 'Media de sondeos',
-    fieldwork: 'Octubre 2026',
+    fieldwork: 'Noviembre 2026',
     sample: 'Agregado',
     seats: {
-      pp: 128, psoe: 104, vox: 65, 'frente-amplio': 17, podemos: 5, erc: 7, junts: 7,
-      'eh-bildu': 7, pnv: 5, bng: 2, cc: 1, upn: 1, salf: 1,
+      pp: 134, psoe: 106, vox: 68, 'frente-amplio': 10, podemos: 1, erc: 9, junts: 6,
+      'eh-bildu': 7, pnv: 4, bng: 2, cc: 1, upn: 1, salf: 0,
     },
     pct: {
-      pp: 32.1, psoe: 27.0, vox: 17.5, 'frente-amplio': 6.2, podemos: 2.9, erc: 1.8, junts: 1.6,
-      'eh-bildu': 1.5, pnv: 1.1, bng: 0.7, cc: 0.4, upn: 0.2, salf: 2.4,
+      pp: 31.0, psoe: 26.2, vox: 19.5, 'frente-amplio': 6.6, podemos: 2.1, erc: 2.4, junts: 1.7,
+      'eh-bildu': 1.4, pnv: 0.9, bng: 0.9, cc: 0.4, upn: 0.2, salf: 2.2,
     },
   },
   {
@@ -125,14 +125,36 @@ export const polls: Poll[] = [
     seats: { pp: 126, psoe: 107, vox: 62, 'frente-amplio': 18, podemos: 5, salf: 1 },
     pct: { pp: 31.5, psoe: 28.0, vox: 16.8, 'frente-amplio': 6.6, podemos: 3.0, salf: 2.0 },
   },
-    {
-    id: 'El Español',
+ {
+    id: 'sociometrica-nov',
     scope: 'all',
     name: 'Sociométrica',
     kind: 'Encuesta privada',
-    fieldwork: '2 nov 2026',
-    sample: '1.200 entrevistas',
-    seats: { pp: 126, psoe: 107, vox: 62, 'frente-amplio': 18, podemos: 5, salf: 1 },
-    pct: { pp: 31.5, psoe: 28.0, vox: 16.8, 'frente-amplio': 6.6, podemos: 3.0, salf: 2.0 },
+    fieldwork: '2–5 nov 2026',
+    sample: '1.500 entrevistas',
+    seats: {
+      pp: 134, psoe: 105, vox: 67, 'frente-amplio': 11, podemos: 1, erc: 9, junts: 7,
+      'eh-bildu': 7, pnv: 4, bng: 2, cc: 1, upn: 1, salf: 1,
+    },
+    pct: {
+      pp: 31.2, psoe: 26.0, vox: 19.0, 'frente-amplio': 6.8, podemos: 2.2, erc: 2.4, junts: 1.7,
+      'eh-bildu': 1.3, pnv: 0.9, bng: 0.8, cc: 0.4, upn: 0.2, salf: 2.5,
+    },
+  },
+  {
+    id: 'sigma-dos-nov',
+    scope: 'all',
+    name: 'Sigma Dos',
+    kind: 'Encuesta privada',
+    fieldwork: '3–6 nov 2026',
+    sample: '1.800 entrevistas',
+    seats: {
+      pp: 136, psoe: 103, vox: 70, 'frente-amplio': 9, podemos: 1, erc: 9, junts: 6,
+      'eh-bildu': 7, pnv: 4, bng: 3, cc: 1, upn: 1, salf: 0,
+    },
+    pct: {
+      pp: 31.8, psoe: 25.8, vox: 20.1, 'frente-amplio': 6.2, podemos: 1.9, erc: 2.5, junts: 1.6,
+      'eh-bildu': 1.4, pnv: 0.9, bng: 1.0, cc: 0.4, upn: 0.2, salf: 2.1,
+    },
   },
 ]
